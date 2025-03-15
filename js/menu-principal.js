@@ -1,7 +1,7 @@
 /**
  * Menu Principal RPG
  * @author: CarlosFelipePaixao
- * @lastUpdate: 2025-03-14 21:42:05 UTC
+ * @lastUpdate: 2025-03-14 21:53:48 UTC
  */
 
 class MenuPrincipal {
@@ -9,6 +9,7 @@ class MenuPrincipal {
         this.menuElement = document.getElementById('menu-principal');
         this.opcoesMenu = document.querySelectorAll('.opcao-menu');
         this.opcaoSelecionada = 0;
+        this.gerenciadorCenas = new GerenciadorCenas();
         this.init();
     }
 
@@ -61,24 +62,22 @@ class MenuPrincipal {
         });
     }
 
-    selecionarOpcao() {
+    async selecionarOpcao() {
         const opcaoAtual = this.opcoesMenu[this.opcaoSelecionada];
         const acao = opcaoAtual.dataset.opcao;
         
-        console.log('Opção selecionada:', acao);
-        
         switch(acao) {
             case 'iniciar':
-                this.iniciarJornada();
+                await this.gerenciadorCenas.trocarCena('jornada');
                 break;
             case 'habilidades':
-                this.mostrarHabilidades();
+                await this.gerenciadorCenas.trocarCena('habilidades');
                 break;
             case 'projetos':
-                this.mostrarProjetos();
+                await this.gerenciadorCenas.trocarCena('projetos');
                 break;
             case 'contato':
-                this.mostrarContato();
+                await this.gerenciadorCenas.trocarCena('contato');
                 break;
         }
     }
