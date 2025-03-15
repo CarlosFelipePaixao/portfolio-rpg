@@ -24,25 +24,6 @@
 }
 
 /* Container do Menu */
-#menu-principal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(rgba(46, 29, 15, 0.4), rgba(46, 29, 15, 0.4)),
-                url('../assets/backgrounds/menu-bg.jpeg') center/cover no-repeat fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Press Start 2P', cursive;
-    color: #fff;
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-    z-index: 100;
-}
-
-/* Container do Menu */
 .menu-container {
     text-align: center;
     padding: 2rem;
