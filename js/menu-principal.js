@@ -1,120 +1,119 @@
 /**
- * Menu Principal - Portfólio RPG
+ * Menu Principal RPG
  * @author: CarlosFelipePaixao
- * @lastUpdate: 2025-03-15 00:40:01 UTC
+ * @lastUpdate: 2025-03-14 21:42:05 UTC
  */
 
 class MenuPrincipal {
     constructor() {
-        // Elementos do DOM
         this.menuElement = document.getElementById('menu-principal');
         this.opcoesMenu = document.querySelectorAll('.opcao-menu');
         this.opcaoSelecionada = 0;
-        
-        // Inicia o menu quando a tela de carregamento terminar
-        this.observarTelaCarregamento();
-    }
-
-    observarTelaCarregamento() {
-        const telaCarregamento = document.getElementById('tela-carregamento');
-        
-        // Observa mudanças na tela de carregamento
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && 
-                    mutation.attributeName === 'class' && 
-                    telaCarregamento.classList.contains('hidden')) {
-                    this.init();
-                    observer.disconnect();
-                }
-            });
-        });
-
-        // Configura o observer
-        observer.observe(telaCarregamento, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
+        this.init();
     }
 
     init() {
-        // Remove a classe hidden do menu
-        this.menuElement.classList.remove('hidden');
-        
-        // Configura os event listeners para as opções do menu
-        this.opcoesMenu.forEach((opcao, index) => {
-            opcao.addEventListener('click', () => this.selecionarOpcao(index));
+        this.adicionarEventos();
+        this.atualizarSelecao();
+    }
+
+    adicionarEventos() {
+        // Eventos de teclado
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowUp':
+                    this.moverSelecao(-1);
+                    break;
+                case 'ArrowDown':
+                    this.moverSelecao(1);
+                    break;
+                case 'Enter':
+                    this.selecionarOpcao();
+                    break;
+            }
         });
 
-        // Configura navegação por teclado
-        document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+        // Eventos de mouse
+        this.opcoesMenu.forEach((opcao, index) => {
+            opcao.addEventListener('mouseover', () => {
+                this.opcaoSelecionada = index;
+                this.atualizarSelecao();
+            });
+
+            opcao.addEventListener('click', () => {
+                this.selecionarOpcao();
+            });
+        });
     }
 
-    selecionarOpcao(index) {
-        // Remove a seleção anterior
-        this.opcoesMenu[this.opcaoSelecionada].classList.remove('selecionado');
-        
-        // Atualiza a seleção
-        this.opcaoSelecionada = index;
-        this.opcoesMenu[this.opcaoSelecionada].classList.add('selecionado');
-        
-        // Executa a ação da opção selecionada
-        this.executarAcao(this.opcoesMenu[index].dataset.opcao);
-    }
-
-    handleKeyPress(e) {
-        switch(e.key) {
-            case 'ArrowUp':
-                e.preventDefault();
-                this.navegarMenu(-1);
-                break;
-            case 'ArrowDown':
-                e.preventDefault();
-                this.navegarMenu(1);
-                break;
-            case 'Enter':
-                e.preventDefault();
-                this.opcoesMenu[this.opcaoSelecionada].click();
-                break;
-        }
-    }
-
-    navegarMenu(direcao) {
-        // Remove a seleção atual
-        this.opcoesMenu[this.opcaoSelecionada].classList.remove('selecionado');
-        
-        // Calcula nova posição
+    moverSelecao(direcao) {
         this.opcaoSelecionada = (this.opcaoSelecionada + direcao + this.opcoesMenu.length) % this.opcoesMenu.length;
-        
-        // Aplica nova seleção
-        this.opcoesMenu[this.opcaoSelecionada].classList.add('selecionado');
-        this.opcoesMenu[this.opcaoSelecionada].focus();
+        this.atualizarSelecao();
     }
 
-    executarAcao(opcao) {
-        switch(opcao) {
+    atualizarSelecao() {
+        this.opcoesMenu.forEach((opcao, index) => {
+            if (index === this.opcaoSelecionada) {
+                opcao.classList.add('selecionado');
+            } else {
+                opcao.classList.remove('selecionado');
+            }
+        });
+    }
+
+    selecionarOpcao() {
+        const opcaoAtual = this.opcoesMenu[this.opcaoSelecionada];
+        const acao = opcaoAtual.dataset.opcao;
+        
+        console.log('Opção selecionada:', acao);
+        
+        switch(acao) {
             case 'iniciar':
-                console.log('Iniciando jornada...');
-                // Implementar lógica para iniciar o jogo
+                this.iniciarJornada();
                 break;
             case 'habilidades':
-                console.log('Abrindo habilidades...');
-                // Implementar lógica para mostrar habilidades
+                this.mostrarHabilidades();
                 break;
             case 'projetos':
-                console.log('Abrindo projetos...');
-                // Implementar lógica para mostrar projetos
+                this.mostrarProjetos();
                 break;
             case 'contato':
-                console.log('Abrindo contato...');
-                // Implementar lógica para mostrar contato
+                this.mostrarContato();
                 break;
         }
+    }
+
+    mostrar() {
+        this.menuElement.classList.remove('hidden');
+    }
+
+    ocultar() {
+        this.menuElement.classList.add('hidden');
+    }
+
+    // Métodos para implementar as ações do menu
+    iniciarJornada() {
+        console.log('Iniciando jornada...');
+        // Implementar navegação para o início do jogo
+    }
+
+    mostrarHabilidades() {
+        console.log('Mostrando habilidades...');
+        // Implementar navegação para a seção de habilidades
+    }
+
+    mostrarProjetos() {
+        console.log('Mostrando projetos...');
+        // Implementar navegação para a seção de projetos
+    }
+
+    mostrarContato() {
+        console.log('Mostrando contato...');
+        // Implementar navegação para a seção de contato
     }
 }
 
-// Inicializa o menu quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM carregado, inicializando Menu Principal');
-    window.menuPrincipal = new MenuPrincipal();
+// Inicializar menu após o carregamento
+window.addEventListener('load', () => {
+    const menu = new MenuPrincipal();
 });

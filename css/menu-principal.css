@@ -1,93 +1,42 @@
-/**
- * Estilos do Menu Principal - Portfólio RPG
- * @author: CarlosFelipePaixao
- * @lastUpdate: 2025-03-15 00:38:25 UTC
- */
+.hidden {
+    display: none !important;
+}
 
-/* Menu Principal Container */
 #menu-principal {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(rgba(46, 29, 15, 0.4), rgba(46, 29, 15, 0.4)),
-                url('../assets/backgrounds/menu-bg.jpeg') center/cover no-repeat fixed;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Press Start 2P', cursive;
     color: #fff;
-    opacity: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
     transition: opacity 1s ease-in-out;
-    z-index: 100;
 }
 
-/* Container do Menu */
 .menu-container {
     text-align: center;
     padding: 2rem;
-    background: rgba(0, 0, 0, 0.6);
-    border: 0;
-    position: relative;
-    z-index: 2;
-    min-width: 320px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 4px solid #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
-/* Bordas em pixel art */
-.menu-container::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    background: 
-        /* Cantos externos */
-        linear-gradient(45deg, #8B4513, #654321) 0 0,
-        linear-gradient(135deg, #8B4513, #654321) 100% 0,
-        linear-gradient(-135deg, #8B4513, #654321) 100% 100%,
-        linear-gradient(-45deg, #8B4513, #654321) 0 100%;
-    background-size: 16px 16px;
-    background-repeat: no-repeat;
-    z-index: -1;
-}
-
-.menu-container::after {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 4px solid #8B4513;
-    background: transparent;
-    z-index: -1;
-    image-rendering: pixelated;
-    clip-path: 
-        polygon(
-            0 4px, 4px 4px, 4px 0,
-            calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
-            100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
-            4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
-        );
-}
-
-/* Título do Menu */
 .titulo-menu {
-    font-size: 2rem;
-    color: #fff;
-    text-shadow: 3px 3px 0px #4a4a4a;
+    font-size: 2.5rem;
     margin-bottom: 3rem;
-    animation: pulsar 2s infinite ease-in-out;
+    text-shadow: 3px 3px 0px #4a4a4a;
+    animation: pulsar 2s infinite;
 }
 
-/* Opções do Menu */
 .menu-opcoes {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    margin: 2rem 0;
 }
 
 .opcao-menu {
@@ -97,42 +46,23 @@
     padding: 1rem 2rem;
     font-family: 'Press Start 2P', cursive;
     font-size: 1rem;
-    position: relative;
-    transition: all 0.3s ease;
-    overflow: hidden;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Efeito de brilho mágico no hover */
-.opcao-menu::before {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.8) 0%,
-        rgba(255, 255, 255, 0.2) 30%,
-        transparent 70%
-    );
-    transition: all 0.5s ease;
-    opacity: 0;
-    transform: scale(0.5);
+.opcao-menu:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.05);
 }
 
-.opcao-menu:hover::before {
-    opacity: 1;
-    top: -100%;
-    left: -100%;
-    transform: scale(1);
-    animation: magical-glow 2s infinite linear;
+.opcao-menu:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
-/* Menu Footer */
 .menu-footer {
-    margin-top: 2rem;
+    margin-top: 3rem;
     font-size: 0.8rem;
     opacity: 0.7;
 }
@@ -141,65 +71,40 @@
     margin-right: 1rem;
 }
 
-/* Animações */
 @keyframes pulsar {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
 
-@keyframes magical-glow {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-/* Efeito de seleção */
-.opcao-menu:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    background: #fff;
-    color: #000;
-}
-
-.opcao-menu.selecionado {
-    background: #fff;
-    color: #000;
-}
-
-/* Classes utilitárias */
-.hidden {
-    opacity: 0;
+/* Efeito de scanline */
+#menu-principal::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        transparent 50%,
+        rgba(0, 0, 0, 0.05) 50%
+    );
+    background-size: 100% 4px;
     pointer-events: none;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .titulo-menu {
-        font-size: 1.5rem;
-    }
-
-    .menu-container {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
-
-    .opcao-menu {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .menu-footer {
-        font-size: 0.7rem;
-    }
-}
-
-/* Suporte para tela escura */
-@media (prefers-color-scheme: dark) {
-    .menu-container {
-        background: rgba(0, 0, 0, 0.9);
-    }
+/* Efeito de vinheta */
+#menu-principal::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    pointer-events: none;
 }
