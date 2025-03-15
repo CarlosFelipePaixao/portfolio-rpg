@@ -1,0 +1,59 @@
+/* Estilos base para todas as cenas */
+.cena {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+}
+
+.cena.fade-out {
+    opacity: 0;
+}
+
+.cena.fade-in {
+    opacity: 1;
+}
+
+/* Estilos específicos para cada cena */
+.cena-jornada,
+.cena-habilidades,
+.cena-projetos,
+.cena-contato {
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Títulos das cenas */
+.cena h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-shadow: 4px 4px 0px #4a4a4a;
+    text-align: center;
+}
+
+/* Botão de voltar */
+.botao-voltar {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-voltar:hover {
+    background: #fff;
+    color: #000;
+}

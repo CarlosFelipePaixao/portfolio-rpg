@@ -1,0 +1,21 @@
+/**
+ * Estilos do Cursor - Portfólio RPG
+ * @author: CarlosFelipePaixao
+ * @lastUpdate: 2025-03-15 00:59:15 UTC
+ */
+
+/* Cursor padrão */
+body {
+    cursor: url('../assets/cursors/sword-normal.png'), auto !important;
+}
+
+/* Cursor para elementos interativos */
+button, 
+a, 
+.opcao-menu,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+select {
+    cursor: url('../assets/cursors/sword-pointer.png'), pointer !important;
+}

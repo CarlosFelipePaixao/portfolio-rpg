@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Carlos Felipe da Paixão">
+    <meta name="description" content="Portfólio em estilo RPG">
+    <meta name="last-modified" content="2025-03-15 00:01:10 UTC">
+    
+    <title>Portfólio RPG - Carlos Felipe da Paixão</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/tela-carregamento.css">
+    <link rel="stylesheet" href="css/menu-principal.css">
+    <link rel="stylesheet" href="css/cursor.css">
+</head>
+<body>
+    <!-- Tela de Carregamento -->
+    <div id="tela-carregamento">
+        <div class="conteudo-carregamento">
+            <div class="titulo-pixel">Carregando Aventura</div>
+            <div class="pixel-art-personagem"></div>
+            <div class="container-progresso">
+                <div class="barra-progresso">
+                    <div class="progresso"></div>
+                </div>
+                <div class="texto-carregamento">
+                    <span class="dicas">Preparando sua jornada...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Principal -->
+    <div id="menu-principal" class="hidden">
+        <div class="menu-container">
+            <h1 class="titulo-menu">Carlos Felipe da Paixão</h1>
+            <div class="menu-opcoes">
+                <button class="opcao-menu" data-opcao="iniciar">Iniciar Jornada</button>
+                <button class="opcao-menu" data-opcao="habilidades">Habilidades</button>
+                <button class="opcao-menu" data-opcao="projetos">Projetos</button>
+                <button class="opcao-menu" data-opcao="contato">Contato</button>
+            </div>
+            <div class="menu-footer">
+                <span class="versao">v1.0.0</span>
+                <span class="copyright">2025 © Carlos Felipe da Paixão</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas do Jogo -->
+    <div id="container-jogo" class="hidden">
+        <canvas id="canvas-jogo"></canvas>
+        <div id="caixa-dialogo" class="hidden"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio-controller.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/som.js"></script>
+    <script src="js/carregamento.js"></script>
+    <script src="js/menu-principal.js"></script>
+    <script src="js/cursor.js"></script>
+    <!-- ... resto dos scripts ... -->
+</body>
+</html>

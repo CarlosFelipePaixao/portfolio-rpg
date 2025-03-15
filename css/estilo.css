@@ -1,0 +1,190 @@
+/**
+ * Estilos Globais - Portfólio RPG
+ * @author: CarlosFelipePaixao
+ * @lastUpdate: 2025-03-14 22:41:37 UTC
+ */
+
+/* Variáveis globais */
+:root {
+    --tamanho-pixel: 4;
+    --celula-grid: calc(16px * var(--tamanho-pixel));
+    --cor-primaria: #fff;
+    --cor-fundo: #000;
+    --cor-sombra: #4a4a4a;
+    --transicao-padrao: 1s ease-in-out;
+}
+
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos base */
+body {
+    background: var(--cor-fundo);
+    font-family: 'Press Start 2P', monospace;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    color: var(--cor-primaria);
+}
+
+/* Container principal do jogo */
+#container-jogo {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#canvas-jogo {
+    image-rendering: pixelated;
+    background: #0f0f0f;
+}
+
+/* Sistema de diálogo */
+#caixa-dialogo {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: 4px solid var(--cor-primaria);
+    padding: 1rem;
+    width: 80%;
+    max-width: 800px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Classes utilitárias de visibilidade */
+.oculto,
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Tela de carregamento */
+#tela-carregamento {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--cor-fundo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity var(--transicao-padrao);
+}
+
+.conteudo-carregamento {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* Barra de progresso */
+.container-progresso {
+    margin-top: 2rem;
+}
+
+.barra-progresso {
+    width: 280px;
+    height: 24px;
+    border: 4px solid var(--cor-primaria);
+    margin: 1rem auto;
+    padding: 2px;
+    background: #1a1a1a;
+}
+
+.progresso {
+    width: 0%;
+    height: 100%;
+    background-color: var(--cor-primaria);
+    transition: width 0.2s ease-out;
+}
+
+/* Sistema de transições */
+.fade-transition,
+#tela-carregamento,
+#menu-principal {
+    transition: opacity var(--transicao-padrao);
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
+
+.fade-in {
+    opacity: 1 !important;
+}
+
+/* Elementos de texto */
+.titulo-pixel {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-shadow: 4px 4px 0px var(--cor-sombra);
+}
+
+.texto-carregamento {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.dicas {
+    display: block;
+    min-height: 1.2em;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .titulo-pixel {
+        font-size: 1.5rem;
+    }
+
+    .barra-progresso {
+        width: 200px;
+    }
+
+    #caixa-dialogo {
+        width: 90%;
+        font-size: 0.8rem;
+    }
+}
+
+/* Suporte para temas escuros do sistema */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cor-fundo: #000;
+        --cor-primaria: #fff;
+    }
+}
