@@ -4,12 +4,12 @@ export function createTemporaryBackground() {
     canvas.height = 352;
     const ctx = canvas.getContext('2d');
 
-    // Desenhar um padrão de grid
-    ctx.fillStyle = '#2c2c2c';
+    // Desenha um fundo com grid
+    ctx.fillStyle = '#2c3e50';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Desenhar grid
-    ctx.strokeStyle = '#3a3a3a';
+    // Desenha o grid
+    ctx.strokeStyle = '#34495e';
     ctx.lineWidth = 1;
 
     // Linhas verticais
@@ -28,5 +28,5 @@ export function createTemporaryBackground() {
         ctx.stroke();
     }
 
-    return canvas.toDataURL('image/png');
+    return canvas.toDataURL();
 }

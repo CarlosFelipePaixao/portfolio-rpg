@@ -125,6 +125,8 @@ export class GerenciadorCenas {
         }
     }
 
+    // ... (mantenha o resto do código igual)
+
     async carregarJornada() {
         console.log('Iniciando carregamento da Jornada');
         const cena = this.cenas.jornada;
@@ -138,12 +140,12 @@ export class GerenciadorCenas {
         conteudo.innerHTML = `
             <h2>Dungeon do Conhecimento</h2>
             <div id="dungeon-container">
-                <canvas id="canvas-jogo"></canvas>
+                <canvas id="canvas-jogo" width="383" height="352"></canvas>
             </div>
         `;
         
         cena.appendChild(conteudo);
-    
+
         try {
             console.log('Inicializando o jogo...');
             const jogo = new Jogo();
@@ -151,13 +153,14 @@ export class GerenciadorCenas {
             console.log('Jogo inicializado com sucesso!');
         } catch (error) {
             console.error('Erro ao inicializar o jogo:', error);
-            // Mostrar mensagem de erro para o usuário
             const mensagemErro = document.createElement('div');
             mensagemErro.className = 'erro-jogo';
             mensagemErro.textContent = 'Erro ao carregar o jogo. Por favor, tente novamente.';
             cena.appendChild(mensagemErro);
         }
     }
+
+// ... (mantenha o resto do código igual)
 
     async carregarHabilidades() {
         console.log('Carregando cena de Habilidades');

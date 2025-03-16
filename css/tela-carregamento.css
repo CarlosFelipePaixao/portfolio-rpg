@@ -1,3 +1,31 @@
+/* Tela de Carregamento */
+#tela-carregamento {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.conteudo-carregamento {
+    text-align: center;
+    padding: 20px;
+}
+
+.titulo-pixel {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-shadow: 4px 4px 0px #4a4a4a;
+}
+
 /* Mantenha os keyframes no topo */
 @keyframes piscar {
     0% { opacity: 1; }
@@ -7,7 +35,7 @@
 
 @keyframes caminhar {
     0% { background-position-x: 0px; }
-    100% { background-position-x: -192px; } /* 4 frames de 48px cada */
+    100% { background-position-x: -192px; } /* 4 frames de 48px */
 }
 
 @keyframes progresso {
@@ -20,20 +48,25 @@
     width: 48px;
     height: 68px;
     margin: 20px auto;
-    background-size: 192px 68px; /* Largura total (48px * 4 frames) x Altura */
+    background-size: 192px 68px; /* Largura total (48px * 4 frames) */
     image-rendering: pixelated;
     animation: caminhar 0.8s steps(4) infinite; /* Importante: steps(4) para animação frame a frame */
-    
     /* Removendo o debug visual */
     background-color: transparent;
     border: none;
 }
 
+/* Container da barra de progresso */
+.container-progresso {
+    width: 500px; /* Aumentado para acomodar textos maiores */
+    margin: 0 auto;
+}
+
 /* Barra de progresso */
 .barra-progresso {
-    width: 280px;
+    width: 280px; /* Mantém a largura original da barra */
     height: 24px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     background: #1a1a1a;
     border: 4px solid #fff;
     padding: 2px;
@@ -44,7 +77,38 @@
     height: 100%;
     background: #4a90e2;
     width: 0%;
-    animation: progresso 3s ease-in-out;
+    transition: width 0.2s ease-out;
 }
 
-/* Outros estilos permanecem iguais... */
+/* Texto de carregamento */
+.texto-carregamento {
+    width: 100%; /* Usa toda a largura do container */
+    margin: 0 auto;
+    color: #aaa;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap; /* Mantém o texto em uma linha */
+    text-align: center; /* Centraliza o texto */
+}
+
+.dicas {
+    display: inline-block;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    min-width: fit-content; /* Garante que o texto não seja cortado */
+}
+
+/* Estados de fade */
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+/* Classe para esconder elementos */
+.hidden {
+    display: none !important;
+}
