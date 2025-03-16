@@ -1,15 +1,11 @@
-/**
- * Menu Principal RPG
- * @author: CarlosFelipePaixao
- * @lastUpdate: 2025-03-14 21:53:48 UTC
- */
-
-class MenuPrincipal {
-    constructor() {
+export class MenuPrincipal {
+    constructor(gerenciadorCenas) {
         this.menuElement = document.getElementById('menu-principal');
         this.opcoesMenu = document.querySelectorAll('.opcao-menu');
         this.opcaoSelecionada = 0;
-        this.gerenciadorCenas = new GerenciadorCenas();
+        this.gerenciadorCenas = gerenciadorCenas;
+        
+        console.log('Menu Principal inicializado');
         this.init();
     }
 
@@ -41,7 +37,10 @@ class MenuPrincipal {
                 this.atualizarSelecao();
             });
 
-            opcao.addEventListener('click', () => {
+            opcao.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Opção clicada:', opcao.dataset.opcao);
+                this.opcaoSelecionada = index;
                 this.selecionarOpcao();
             });
         });
@@ -66,19 +65,26 @@ class MenuPrincipal {
         const opcaoAtual = this.opcoesMenu[this.opcaoSelecionada];
         const acao = opcaoAtual.dataset.opcao;
         
-        switch(acao) {
-            case 'iniciar':
-                await this.gerenciadorCenas.trocarCena('jornada');
-                break;
-            case 'habilidades':
-                await this.gerenciadorCenas.trocarCena('habilidades');
-                break;
-            case 'projetos':
-                await this.gerenciadorCenas.trocarCena('projetos');
-                break;
-            case 'contato':
-                await this.gerenciadorCenas.trocarCena('contato');
-                break;
+        console.log('Selecionando opção:', acao);
+        
+        try {
+            switch(acao) {
+                case 'iniciar':
+                    console.log('Iniciando jornada...');
+                    await this.gerenciadorCenas.trocarCena('jornada');
+                    break;
+                case 'habilidades':
+                    await this.gerenciadorCenas.trocarCena('habilidades');
+                    break;
+                case 'projetos':
+                    await this.gerenciadorCenas.trocarCena('projetos');
+                    break;
+                case 'contato':
+                    await this.gerenciadorCenas.trocarCena('contato');
+                    break;
+            }
+        } catch (error) {
+            console.error('Erro ao selecionar opção:', error);
         }
     }
 
@@ -89,30 +95,4 @@ class MenuPrincipal {
     ocultar() {
         this.menuElement.classList.add('hidden');
     }
-
-    // Métodos para implementar as ações do menu
-    iniciarJornada() {
-        console.log('Iniciando jornada...');
-        // Implementar navegação para o início do jogo
-    }
-
-    mostrarHabilidades() {
-        console.log('Mostrando habilidades...');
-        // Implementar navegação para a seção de habilidades
-    }
-
-    mostrarProjetos() {
-        console.log('Mostrando projetos...');
-        // Implementar navegação para a seção de projetos
-    }
-
-    mostrarContato() {
-        console.log('Mostrando contato...');
-        // Implementar navegação para a seção de contato
-    }
 }
-
-// Inicializar menu após o carregamento
-window.addEventListener('load', () => {
-    const menu = new MenuPrincipal();
-});

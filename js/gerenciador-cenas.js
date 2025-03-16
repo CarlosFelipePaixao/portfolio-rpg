@@ -1,11 +1,8 @@
-/**
- * Gerenciador de Cenas do Portfólio RPG
- * @author: CarlosFelipePaixao
- * @lastUpdate: 2025-03-14 21:53:48 UTC
- */
+import { Jogo } from './jogo.js';
 
-class GerenciadorCenas {
+export class GerenciadorCenas {
     constructor() {
+        console.log('GerenciadorCenas inicializado');
         this.cenaAtual = null;
         this.cenas = {
             menu: document.getElementById('menu-principal'),
@@ -19,11 +16,17 @@ class GerenciadorCenas {
     }
 
     init() {
+        console.log('Iniciando GerenciadorCenas');
         // Criar containers para cada cena
         this.criarContainersCenas();
         
         // Definir menu como cena inicial
         this.cenaAtual = 'menu';
+
+        // Adicionar listener para erros
+        window.addEventListener('error', (e) => {
+            console.error('Erro na aplicação:', e);
+        });
     }
 
     criarContainersCenas() {
@@ -37,118 +40,197 @@ class GerenciadorCenas {
             document.body.appendChild(container);
             this.cenas[cena] = container;
         });
+        
+        console.log('Containers de cenas criados');
     }
 
     async trocarCena(novaCena) {
-        if (this.cenaAtual === novaCena) return;
+        console.log(`Tentando trocar para a cena: ${novaCena}`);
+        
+        if (this.cenaAtual === novaCena) {
+            console.log('Já estamos na cena solicitada');
+            return;
+        }
 
-        // Fade out da cena atual
-        const cenaAtual = this.cenas[this.cenaAtual];
-        cenaAtual.classList.add('fade-out');
+        try {
+            // Fade out da cena atual
+            const cenaAtual = this.cenas[this.cenaAtual];
+            if (!cenaAtual) {
+                console.error('Cena atual não encontrada:', this.cenaAtual);
+                return;
+            }
+            
+            console.log('Iniciando transição de cena');
+            cenaAtual.classList.add('fade-out');
 
-        // Aguardar a transição
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Ocultar cena atual
-        cenaAtual.classList.add('hidden');
-        
-        // Preparar nova cena
-        const proximaCena = this.cenas[novaCena];
-        proximaCena.classList.remove('hidden');
-        proximaCena.classList.add('fade-out');
-        
-        // Forçar reflow
-        proximaCena.offsetHeight;
-        
-        // Fade in da nova cena
-        proximaCena.classList.remove('fade-out');
-        proximaCena.classList.add('fade-in');
-        
-        // Atualizar cena atual
-        this.cenaAtual = novaCena;
-        
-        // Carregar conteúdo da nova cena
-        await this.carregarConteudoCena(novaCena);
+            // Aguardar a transição
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Ocultar cena atual
+            cenaAtual.classList.add('hidden');
+            
+            // Preparar nova cena
+            const proximaCena = this.cenas[novaCena];
+            if (!proximaCena) {
+                console.error('Próxima cena não encontrada:', novaCena);
+                return;
+            }
+            
+            // Remover classes de transição anteriores
+            proximaCena.classList.remove('fade-in', 'fade-out');
+            
+            // Mostrar nova cena
+            proximaCena.classList.remove('hidden');
+            
+            // Forçar reflow
+            proximaCena.offsetHeight;
+            
+            // Fade in da nova cena
+            proximaCena.classList.add('fade-in');
+            
+            // Atualizar cena atual
+            this.cenaAtual = novaCena;
+            
+            console.log('Carregando conteúdo da nova cena');
+            // Carregar conteúdo da nova cena
+            await this.carregarConteudoCena(novaCena);
+            
+            console.log('Transição de cena concluída');
+        } catch (error) {
+            console.error('Erro durante a troca de cena:', error);
+        }
     }
 
     async carregarConteudoCena(cena) {
-        switch(cena) {
-            case 'jornada':
-                await this.carregarJornada();
-                break;
-            case 'habilidades':
-                await this.carregarHabilidades();
-                break;
-            case 'projetos':
-                await this.carregarProjetos();
-                break;
-            case 'contato':
-                await this.carregarContato();
-                break;
+        console.log(`Carregando conteúdo da cena: ${cena}`);
+        try {
+            switch(cena) {
+                case 'jornada':
+                    await this.carregarJornada();
+                    break;
+                case 'habilidades':
+                    await this.carregarHabilidades();
+                    break;
+                case 'projetos':
+                    await this.carregarProjetos();
+                    break;
+                case 'contato':
+                    await this.carregarContato();
+                    break;
+                default:
+                    console.log('Cena não reconhecida:', cena);
+            }
+        } catch (error) {
+            console.error(`Erro ao carregar cena ${cena}:`, error);
         }
     }
 
     async carregarJornada() {
+        console.log('Iniciando carregamento da Jornada');
         const cena = this.cenas.jornada;
-        cena.innerHTML = `
-            <div class="cena-jornada">
-                <h2>Dungeon do Conhecimento</h2>
-                <div id="dungeon-container">
-                    <canvas id="canvas-jogo" width="383" height="352"></canvas>
-                </div>
+        
+        // Limpar conteúdo anterior
+        cena.innerHTML = '';
+        
+        // Criar estrutura da cena
+        const conteudo = document.createElement('div');
+        conteudo.className = 'cena-jornada';
+        conteudo.innerHTML = `
+            <h2>Dungeon do Conhecimento</h2>
+            <div id="dungeon-container">
+                <canvas id="canvas-jogo"></canvas>
             </div>
         `;
-
-        // Adicionar estilos para o canvas
-        const canvas = document.getElementById('canvas-jogo');
-        canvas.style.display = 'block';
-        canvas.style.margin = '0 auto';
         
-        // Aguardar um momento para garantir que o canvas está pronto
-        await new Promise(resolve => setTimeout(resolve, 100));
-
-        // Inicializar o jogo
-        const jogo = new Jogo();
-        await jogo.iniciar();
-    }
+        cena.appendChild(conteudo);
     
+        try {
+            console.log('Inicializando o jogo...');
+            const jogo = new Jogo();
+            await jogo.iniciar();
+            console.log('Jogo inicializado com sucesso!');
+        } catch (error) {
+            console.error('Erro ao inicializar o jogo:', error);
+            // Mostrar mensagem de erro para o usuário
+            const mensagemErro = document.createElement('div');
+            mensagemErro.className = 'erro-jogo';
+            mensagemErro.textContent = 'Erro ao carregar o jogo. Por favor, tente novamente.';
+            cena.appendChild(mensagemErro);
+        }
+    }
 
     async carregarHabilidades() {
+        console.log('Carregando cena de Habilidades');
         const cena = this.cenas.habilidades;
         cena.innerHTML = `
             <div class="cena-habilidades">
-                <h2>Árvore de Habilidades</h2>
-                <div class="arvore-habilidades">
-                    <!-- Aqui virá a árvore de habilidades -->
+                <h2>Habilidades</h2>
+                <div class="habilidades-container">
+                    <div class="habilidade-grupo">
+                        <h3>Desenvolvimento Front-end</h3>
+                        <ul class="lista-habilidades">
+                            <li>HTML5/CSS3</li>
+                            <li>JavaScript (ES6+)</li>
+                            <li>React</li>
+                            <li>TypeScript</li>
+                        </ul>
+                    </div>
+                    <div class="habilidade-grupo">
+                        <h3>Desenvolvimento Back-end</h3>
+                        <ul class="lista-habilidades">
+                            <li>Node.js</li>
+                            <li>Python</li>
+                            <li>SQL</li>
+                            <li>APIs RESTful</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         `;
     }
 
     async carregarProjetos() {
+        console.log('Carregando cena de Projetos');
         const cena = this.cenas.projetos;
         cena.innerHTML = `
             <div class="cena-projetos">
-                <h2>Projetos Realizados</h2>
-                <div class="lista-projetos">
-                    <!-- Aqui virão os cards de projetos -->
+                <h2>Projetos</h2>
+                <div class="projetos-container">
+                    <!-- Adicione seus projetos aqui -->
+                    <div class="projeto-card">
+                        <h3>Portfolio RPG</h3>
+                        <p>Um portfolio interativo em estilo RPG</p>
+                        <div class="projeto-tecnologias">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
     }
 
     async carregarContato() {
+        console.log('Carregando cena de Contato');
         const cena = this.cenas.contato;
         cena.innerHTML = `
             <div class="cena-contato">
                 <h2>Contato</h2>
-                <div class="formulario-contato">
-                    <!-- Aqui virá o formulário de contato -->
+                <div class="contato-container">
+                    <div class="contato-info">
+                        <a href="https://github.com/CarlosFelipePaixao" target="_blank" class="contato-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://linkedin.com/in/CarlosFelipePaixao" target="_blank" class="contato-link">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="mailto:paixao.carlosfelipe@gmail.com" class="contato-link">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
     }
 }
-
-// Exportar para uso global
-window.GerenciadorCenas = GerenciadorCenas;

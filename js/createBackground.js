@@ -1,5 +1,4 @@
-// Função para criar uma imagem de background temporária
-function createTemporaryBackground() {
+export function createTemporaryBackground() {
     const canvas = document.createElement('canvas');
     canvas.width = 383;
     canvas.height = 352;
@@ -29,9 +28,5 @@ function createTemporaryBackground() {
         ctx.stroke();
     }
 
-    // Converter para uma imagem PNG
     return canvas.toDataURL('image/png');
 }
-
-// Exportar a função
-export { createTemporaryBackground };

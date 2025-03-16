@@ -8,63 +8,47 @@
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="stylesheet" href="css/tela-carregamento.css">
     <link rel="stylesheet" href="css/menu-principal.css">
-    <link rel="stylesheet" href="css/cenas.css">    
+    <link rel="stylesheet" href="css/cenas.css">
+    <link rel="stylesheet" href="css/jogo.css">
 </head>
 <body>
     <!-- Tela de Carregamento -->
     <div id="tela-carregamento">
-        <div class="conteudo-carregamento">
-            <div class="titulo-pixel">Carregando Aventura</div>
-            <div class="pixel-art-personagem"></div>
-            <div class="container-progresso">
-                <div class="barra-progresso">
-                    <div class="progresso"></div>
-                </div>
-                <div class="texto-carregamento">
-                    <span class="dicas">Preparando sua jornada...</span>
-                </div>
-            </div>
-        </div>
+        <!-- ... seu código existente ... -->
     </div>
 
     <!-- Menu Principal -->
     <div id="menu-principal" class="hidden">
-        <div class="menu-container">
-            <h1 class="titulo-menu">Carlos Felipe da Paixão</h1>
-            <div class="menu-opcoes">
-                <button class="opcao-menu" data-opcao="iniciar">Iniciar Jornada</button>
-                <button class="opcao-menu" data-opcao="habilidades">Habilidades</button>
-                <button class="opcao-menu" data-opcao="projetos">Projetos</button>
-                <button class="opcao-menu" data-opcao="contato">Contato</button>
-            </div>
-            <div class="menu-footer">
-                <span class="versao">v1.0.0</span>
-                <span class="copyright">2024 © Carlos Felipe da Paixão</span>
-            </div>
-        </div>
+        <!-- ... seu código existente ... -->
     </div>
 
-    <!-- Scripts não modulares -->
+    <!-- Scripts -->
     <script src="js/carregamento.js"></script>
-    <script src="js/gerenciador-cenas.js"></script>
-    <script src="js/menu-principal.js"></script>
     <script src="js/CollisionManager.js"></script>
-    <script src="js/dungeon.js"></script>
-    <script type="module" src="js/createBackground.js"></script>
 
-
-    <!-- Scripts modulares -->
+    <!-- Módulos do jogo -->
     <script type="module">
-        // Importar os módulos necessários
-        import { GerenciadorInput } from './js/input.js';
-        import { GerenciadorSprites } from './js/sprites.js';
+        import { GerenciadorCenas } from './js/gerenciador-cenas.js';
         import { Jogo } from './js/jogo.js';
-        
-        // Tornar as classes disponíveis globalmente
-        window.GerenciadorInput = GerenciadorInput;
-        window.GerenciadorSprites = GerenciadorSprites;
+
+        // Garantir que as classes estejam disponíveis globalmente
+        window.GerenciadorCenas = GerenciadorCenas;
         window.Jogo = Jogo;
+
+        // Inicializar o gerenciador de cenas quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            window.gerenciadorCenas = new GerenciadorCenas();
+        });
     </script>
 
+    <!-- Menu Principal precisa ser carregado depois -->
+    <script type="module">
+        import { MenuPrincipal } from './js/menu-principal.js';
+        
+        // Inicializar o menu quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            window.menuPrincipal = new MenuPrincipal(window.gerenciadorCenas);
+        });
+    </script>
 </body>
 </html>
