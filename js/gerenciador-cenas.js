@@ -88,19 +88,28 @@ class GerenciadorCenas {
         }
     }
 
-    // Métodos para carregar cada cena
     async carregarJornada() {
         const cena = this.cenas.jornada;
         cena.innerHTML = `
             <div class="cena-jornada">
                 <h2>Dungeon do Conhecimento</h2>
-                <div id="dungeon-container"></div>
+                <div id="dungeon-container">
+                    <canvas id="canvas-jogo" width="383" height="352"></canvas>
+                </div>
             </div>
         `;
-    
-        // Inicializar a dungeon
-        const dungeon = new Dungeon();
-        document.getElementById('dungeon-container').appendChild(dungeon.elemento);
+
+        // Adicionar estilos para o canvas
+        const canvas = document.getElementById('canvas-jogo');
+        canvas.style.display = 'block';
+        canvas.style.margin = '0 auto';
+        
+        // Aguardar um momento para garantir que o canvas está pronto
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Inicializar o jogo
+        const jogo = new Jogo();
+        await jogo.iniciar();
     }
     
 

@@ -11,11 +11,15 @@ export class GerenciadorSprites {
     }
 
     async carregarSprites() {
-        // Carrega a spritesheet do personagem
-        const spritesheetPersonagem = await this.carregarImagem('/assets/sprites/personagem/spritesheet.png');
-        
-        // Divide a spritesheet em sprites individuais
-        this.cortarSpritesheet(spritesheetPersonagem);
+        try {
+            // Carrega a spritesheet do personagem
+            const spritesheetPersonagem = await this.carregarImagem('../assets/sprites/personagem/spritesheet.png');
+            
+            // Divide a spritesheet em sprites individuais
+            this.cortarSpritesheet(spritesheetPersonagem);
+        } catch (error) {
+            console.error('Erro ao carregar sprites:', error);
+        }
     }
 
     async carregarImagem(caminho) {

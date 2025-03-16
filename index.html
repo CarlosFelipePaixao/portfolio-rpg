@@ -44,10 +44,27 @@
         </div>
     </div>
 
+    <!-- Scripts não modulares -->
     <script src="js/carregamento.js"></script>
     <script src="js/gerenciador-cenas.js"></script>
     <script src="js/menu-principal.js"></script>
     <script src="js/CollisionManager.js"></script>
+    <script src="js/dungeon.js"></script>
+    <script type="module" src="js/createBackground.js"></script>
+
+
+    <!-- Scripts modulares -->
+    <script type="module">
+        // Importar os módulos necessários
+        import { GerenciadorInput } from './js/input.js';
+        import { GerenciadorSprites } from './js/sprites.js';
+        import { Jogo } from './js/jogo.js';
+        
+        // Tornar as classes disponíveis globalmente
+        window.GerenciadorInput = GerenciadorInput;
+        window.GerenciadorSprites = GerenciadorSprites;
+        window.Jogo = Jogo;
+    </script>
 
 </body>
 </html>
