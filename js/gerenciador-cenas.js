@@ -93,13 +93,16 @@ class GerenciadorCenas {
         const cena = this.cenas.jornada;
         cena.innerHTML = `
             <div class="cena-jornada">
-                <h2>Minha Jornada</h2>
-                <div class="mapa-mundo">
-                    <!-- Aqui virá o mapa interativo -->
-                </div>
+                <h2>Dungeon do Conhecimento</h2>
+                <div id="dungeon-container"></div>
             </div>
         `;
+    
+        // Inicializar a dungeon
+        const dungeon = new Dungeon();
+        document.getElementById('dungeon-container').appendChild(dungeon.elemento);
     }
+    
 
     async carregarHabilidades() {
         const cena = this.cenas.habilidades;
